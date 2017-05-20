@@ -1,0 +1,41 @@
+Ian Kleckner
+Foster Lab
+Flowchart for using RD Analysis program
+First update: 2010/01/01
+Last update: 2010/08/30
+
+* Load data into program
+* Perform grid search on desired curve sets (batch task)
+
+--- Optimize fit for each curve set ---
+* Select curve set
+* Select grid fit (min chi^2 from grid search)
+* Exhibits exchange? (see below)
+      o Yes exchange
+	    + Set this as best fit and update windows
+		  # Check Chi2 space and rate analyses
+	    + Refine parameters from grid result if needed
+		  # Set this new fit as the best fit and update
+	    + Can any parameters be accurately extracted?
+		  # Some parameters are OK
+			* Mark best fit OK
+			* Mark which parameters are OK
+		  # None of the parameters are OK
+			* Mark best fit NOT OK
+			* Doesn't matter which parameters are selected as OK
+      o No exchange
+	    + Set the NoEx fit as the best fit (it is by default)
+	    + Select best fit OK
+* Make notes on curve set
+      o Click save
+* Move onto next curve set (first step)
+---------------------------------------
+
+* Calculate errors on best fits (batch task)
+* Examine motions of entire molecule (group analysis)
+
+
+Exhibits exchange if:
+  Rex > ~2 Hz
+    and/or
+  χ2Red(Ex) < χ2Red(NoEx)
