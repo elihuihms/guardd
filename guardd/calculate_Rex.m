@@ -8,6 +8,7 @@ function Rex = calculate_Rex( Tcpmg, p_sim )
 %
 % 2010/01/28 Create code
 % 2011/04/22 Ensure Rex >= 0 (round 1e-3 to zero)
+% 2017/05/26 Fixed a bug with not properly dealing with R2=Inf
 % 
 % FUNCTION
 %  Calculate exchange broadening Rex for the dispersion
@@ -28,7 +29,7 @@ Np  = 5;
 % Try to calculate at vcpmg = 0.1. If this does not work (NaN) add 0.1 and try again
 R20     = NaN;
 vcpmg0  = 0;
-while( isnan(R20) )
+while( isnan(R20) || isinf(R20) )
     vcpmg0  = vcpmg0 + 0.1;
     R20     = model_MQRD_CRJ(vcpmg0, Tcpmg, p_sim(1:Np));
 end
@@ -37,7 +38,7 @@ end
 % try again
 R2inf       = NaN;
 vcpmginf    = 10000;
-while( isnan(R2inf) )
+while( isnan(R2inf) || isinf(R2inf) )
     vcpmginf    = vcpmginf - 1;
     R2inf       = model_MQRD_CRJ(vcpmginf, Tcpmg, p_sim(1:Np));
 end

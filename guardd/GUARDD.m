@@ -7,6 +7,8 @@
 %
 % Started January, 2010
 % 2011/01/18 Update for classes
+% 2017/04/25 Added 19F (IK)
+% 2017/05/26 Fix bug loading prior session
 
 function varargout = GUARDD(varargin)
 % GUARDD M-file for GUARDD.fig
@@ -91,7 +93,7 @@ setappdata(handles.main_gui, 'variables', variables);
 session = Session;
 setappdata(handles.main_gui, 'session', session);
 
-VERSION = 'v.2012.04.21';
+VERSION = 'v.2017.04.25';
 set(handles.text_version, 'String', sprintf('%s',VERSION));
 setappdata(handles.main_gui, 'VERSION', VERSION);
 
@@ -496,9 +498,13 @@ if( ~isequal(filename,0) )
         
         % If variable exists, clear it
         if( isappdata(handles.main_gui, variables{v}) )
-            eval( sprintf('rmappdata(handles.main_gui, \''%s\'');', variables{v}) );
-            eval( sprintf('clear %s;', variables{v}) );
-            fprintf('\tCleared');
+            try
+                eval( sprintf('rmappdata(handles.main_gui, \''%s\'');', variables{v}) );
+                eval( sprintf('clear %s;', variables{v}) );
+                fprintf('\tCleared');
+            catch
+                fprintf('\tNothing to clear');
+            end
         end
         
         % Check if the variable is in the file
@@ -507,11 +513,15 @@ if( ~isequal(filename,0) )
             % Only try to load the variable if its in the file
             %if( strcmp(file_variables(fv).name, variables{v}) )
                 % Load variable from file
-                load(sprintf('%s/%s', pathname, filename), variables{v});
-
-                % Set variable as application data
-                eval( sprintf('setappdata(handles.main_gui, \''%s\'', %s);', variables{v}, variables{v}) );
-                fprintf('\tLoaded');
+                try
+                    load(sprintf('%s/%s', pathname, filename), variables{v});
+                    
+                    % Set variable as application data
+                    eval( sprintf('setappdata(handles.main_gui, \''%s\'', %s);', variables{v}, variables{v}) );
+                    fprintf('\tLoaded');
+                catch
+                    fprintf('\tNothing to load');
+                end
             %end            
         %end
     end

@@ -9,6 +9,7 @@
 % 2011/01/11 Convert to GUARDD program
 % 2011/01/14 Add simulation sets to generate temperature-dependent RD data
 % 2011/04/15 Use classes for SimulationSession, SimulationSet, SimulationCurve
+% 2017/04/25 Added 19F (IK)
 %
 % TO DO
 

@@ -10,6 +10,7 @@ classdef Session < handle
     % 2011/05/01 Load data from script file
     % 2011/06/07 Add settings GUI and param_info
     % 2011/09/11 MC randomization mode A or B (MC_RANDOMIZE_MODE)
+    % 2017/04/25 Added 19F (IK)
     %
     % Properties and methods for data belonging to the entiring program
     
@@ -194,8 +195,8 @@ classdef Session < handle
         gamma_H                     = 42.576;       % 1H MHz/T
         
         
-        AX_name_array               = {'1H', '13C', '15N'};
-        AX_gamma_relative_array     = [1.000, 0.25143, 0.10136];
+        AX_name_array               = {'1H', '13C', '15N', '19F'};
+        AX_gamma_relative_array     = [1.000, 0.25143, 0.10136, 0.9407];
         
         
         Np                  = 5;    % Number of parameters
@@ -894,7 +895,7 @@ classdef Session < handle
             % #	Executes command: dataset = Dataset()
             % #
             % #	NAME	-> Specify name (or [] for auto-name)
-            % #	AX	-> Specify AX nucleus (13C, 15N)
+            % #	AX	-> Specify AX nucleus (13C, 15N, or 19F)
             % #	B0	-> Magnetic field strength (MHz)
             % #	TEMPC	-> Celcius temperature (can also use TEMP for Kelvin)
             % #	TCPMG	-> CPMG time (sec)
@@ -1414,6 +1415,12 @@ classdef Session < handle
                 obj.param_name          = { 'dwH', 'dwN', 'Pa', 'kex', 'R20' };
                 obj.param_name_plot     = { '\Delta\omega_H', '\Delta\omega_N', 'P_A', 'k_e_x', 'R_2^0' };
                 obj.AX_name_plot       = '^{15}N';
+                
+            elseif( strcmp(AX_String,'19F') )    
+                obj.gamma_X                = 40.052;       % 19F MHz/T
+                obj.param_name          = { 'dwH', 'dwF', 'Pa', 'kex', 'R20' };
+                obj.param_name_plot     = { '\Delta\omega_H', '\Delta\omega_F', 'P_A', 'k_e_x', 'R_2^0' };
+                obj.AX_name_plot       = '^{15}N';
 
             else    
                 obj.gamma_X                = 999;       % ?
@@ -1421,7 +1428,7 @@ classdef Session < handle
                 obj.param_name_plot     = { '\Delta\omega_H', '\Delta\omega_?', 'P_A', 'k_e_x', 'R_2^0' };
                 obj.AX_name_plot       = '^{A}X';
 
-                error('AX_String must be either 13C or 15N');
+                error('AX_String must be either 13C, 15N, or 19F');
             end
         end
         
@@ -1539,8 +1546,11 @@ classdef Session < handle
                 case '15N'
                     gamma_relative = 0.10136;
                     
+                case '19F'
+                    gamma_relative = 0.9407;
+                    
                 otherwise
-                    error('Specify AX nucleus 1H, 13C or 15N');
+                    error('Specify AX nucleus 1H, 13C, 15N, or 19F');
             end
         end        
        

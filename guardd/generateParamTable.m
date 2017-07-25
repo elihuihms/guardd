@@ -7,6 +7,7 @@ function table_data = generateParamTable( class_instance )
 %  GNU GPL3 License
 %
 % 2011/01/28 Start coding
+% 2017/04/25 Added 19F (IK)
 % 
 % FUNCTION
 %  Create cell matrix of parameters HTML-formatted for table display
@@ -19,7 +20,7 @@ function table_data = generateParamTable( class_instance )
 %    param_info =    {...
 %        'DESCRIPTION:Description of ALL data and/or project', ...
 %        'seqFileName:Name of ASCII file containing three letter residues for molecular sequence (three letters per line)', ...
-%        'X_nuc:Name of X nucleus (13C, 15N)' ...
+%        'X_nuc:Name of X nucleus (13C, 15N, or 19F)' ...
 %                    };
 %
 %   class_instance is the instance of the class, required to access data value

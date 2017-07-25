@@ -8,7 +8,7 @@ classdef SimulationSession < handle
     %  GNU GPL3 License
     %
     % 2011/04/15 Start coding
-    %
+    % 2017/04/25 Added 19F (IK)
     
     properties (SetAccess = private)
         % SetAccess = private properties can be read via ".", but not set
@@ -18,8 +18,8 @@ classdef SimulationSession < handle
         cs_selected = 0;    % The selected simulation set
         
         % Settings for entire session
-        AX_name_array               = {'1H', '13C', '15N'};
-        AX_gamma_relative           = [1.000, 0.25143, 0.10136];
+        AX_name_array               = {'1H', '13C', '15N', '19F'};
+        AX_gamma_relative           = [1.000, 0.25143, 0.10136, 0.9407];
         convert_units_to_display    = [ 1/(2*3.1416) 1/(2*3.1416) 100 1 1];
         
         % TODO % Copy R gast constant from settings (parent class?)
